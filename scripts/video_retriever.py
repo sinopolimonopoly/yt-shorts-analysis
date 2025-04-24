@@ -1,15 +1,21 @@
+from dotenv import load_dotenv
+
 import requests
 import re
+import os
+
+load_dotenv()
+api_key = os.getenv("API_KEY")
+
+print(api_key)
 
 from collections import defaultdict
-
-API_KEY = "censored"
 
 videos = defaultdict(dict)
 
 def get_channel_id(handle):
 
-    url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q={handle}&key={API_KEY}"
+    url = f"https://www.googleapis.com/youtube/v3/search?part=snippet&type=channel&q={handle}&key={api_key}"
 
     res = requests.get(url).json()
     print(res)
@@ -18,7 +24,7 @@ def get_channel_id(handle):
     return channel_id
 
 def get_uploads_playlist_id(channel_id):
-    url = f"https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id={channel_id}&key={API_KEY}"
+    url = f"https://www.googleapis.com/youtube/v3/channels?part=contentDetails&id={channel_id}&key={api_key}"
     res = requests.get(url).json()
     playlist_id = res['items'][0]['contentDetails']['relatedPlaylists']['uploads']
     return playlist_id
@@ -30,7 +36,7 @@ def get_all_videos(playlist_id):
     counter = 0
 
     while True:
-        url = f"https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId={playlist_id}&key={API_KEY}"
+        url = f"https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=5&playlistId={playlist_id}&key={api_key}"
 
         if next_page_token:
             url += f"&pagetoken={next_page_token}"
@@ -65,7 +71,7 @@ def get_short_vids(video_ids):
     for i in range(0, len(video_ids), 50):
         batch = video_ids[i:i+50]
 
-        url = f"https://www.googleapis.com/youtube/v3/videos?part=contentDetails,snippet&id={','.join(batch)}&key={API_KEY}"
+        url = f"https://www.googleapis.com/youtube/v3/videos?part=contentDetails,snippet&id={','.join(batch)}&key={api_key}"
         res = requests.get(url).json()
         for video in res['items']:
             raw_duration = video['contentDetails']['duration']
