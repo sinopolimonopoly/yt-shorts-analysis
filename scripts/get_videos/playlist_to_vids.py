@@ -21,7 +21,8 @@ def get_videos(playlist_id, max_results, max_duration=False):
 
         res = requests.get(url).json()
         for item in res['items']:
-            raw_duration = item['contentDetails']['duration'].replace("PT", "")
+            print(item)
+            raw_duration = item['snippet']['contentDetails']['duration'].replace("PT", "")
 
             if max_duration == True:
                 processed_duration = process_duration(raw_duration)
@@ -51,17 +52,3 @@ def get_videos(playlist_id, max_results, max_duration=False):
 
         counter += 1
 
-def process_duration(raw_duration):
-    duration = raw_duration.replace("PT", "")
-
-    if "M" in duration:
-        minute_idx = duration.index("M")
-        min_seconds = int(duration[0:minute_idx]) * 60
-        leftover_seconds = int(duration[minute_idx+1:len(duration)-1])
-
-        duration_in_s = min_seconds + leftover_seconds
-
-    else:
-        duration_in_s = int(duration[0:-1])
-    
-    return duration
