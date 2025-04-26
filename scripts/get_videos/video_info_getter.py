@@ -18,11 +18,10 @@ def get_videos_info(video_ids, max_duration=False):
         res = requests.get(url).json()
 
         for item in res['items']:
-
             raw_duration = item['contentDetails']['duration'].replace("PT", "")
 
             if max_duration:
-                processed_duration = process_duration(raw_duration)
+                processed_duration = process_duration(raw_duration, item)
 
                 if processed_duration > max_duration:
                     continue
@@ -41,7 +40,7 @@ def get_videos_info(video_ids, max_duration=False):
             videos[video_id]["Information"]["Title"] = title
             videos[video_id]["Information"]["Upload Date"] = upload_date
 
-            if max_duration == True:
+            if max_duration:
                 videos[video_id]["Information"]["Duration"] = {"min_sec": raw_duration, "secs" : processed_duration}
 
             else:
@@ -54,17 +53,28 @@ def get_videos_info(video_ids, max_duration=False):
     return videos
 
 
-def process_duration(raw_duration):
-    duration = raw_duration.replace("PT", "")
+def process_duration(raw_duration, vid_item):
 
-    if "M" in duration:
-        minute_idx = duration.index("M")
-        min_seconds = int(duration[0:minute_idx]) * 60
-        leftover_seconds = int(duration[minute_idx+1:len(duration)-1])
+    try:  
+        duration = raw_duration.replace("PT", "")
 
-        duration_in_s = min_seconds + leftover_seconds
+        if "M" in duration:
+            minute_idx = duration.index("M")
+            min_seconds = int(duration[0:minute_idx]) * 60
 
-    else:
-        duration_in_s = int(duration[0:-1])
-    
-    return duration
+            if "S" in duration:
+                leftover_seconds = int(duration[minute_idx+1:len(duration)-1])
+                duration_in_s = min_seconds + leftover_seconds
+
+            else:
+                duration_in_s = min_seconds
+
+        else:
+            duration_in_s = int(duration[0:-1]) 
+
+        return duration_in_s
+
+    except ValueError as e:
+        print(f"ValueError!")
+        print(f"Video: {vid_item}")
+        raise e
