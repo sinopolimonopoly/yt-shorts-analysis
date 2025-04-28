@@ -5,6 +5,8 @@ from video_id_getter import get_video_ids
 from video_info_getter import get_videos_info
 from info_outputter import output_info
 
+import json
+
 
 handle = "maxthemeatguy"
 max_secs = 120
@@ -18,3 +20,6 @@ video_ids = get_video_ids(channel_uploads_playlist, 50)
 video_info = get_videos_info(video_ids, max_secs)
 
 output_info(video_info, max_secs)
+
+with open('mtmg_vids.json', 'w') as f:
+    json.dump(video_info, f)
