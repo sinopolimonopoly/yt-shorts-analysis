@@ -1,10 +1,15 @@
+import sys
+import os
+
 from channel_id_getter import get_channel_id
 from uploads_playlist_getter import get_uploads_playlist_id
 from video_id_getter import get_video_ids
 from new_info_getter import get_videos_info
 
-from ..output.console_outputter import output_info
-from scripts.output.dict_to_csv import create_video_csv
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from output.console_outputter import output_info
+from output.dict_to_csv import create_video_csv
 
 # Channel to scrape
 handle = "curtisdoingthings"
@@ -30,6 +35,5 @@ videos_by_date = dict(sorted(video_info.items(), key = lambda item: item[1]['Num
 # Output the dictionary to the console (in a table)
 output_info(videos_by_date)
 
-hi
 # Create CSV file for dictionary
 create_video_csv(videos_by_date, handle, video_type)

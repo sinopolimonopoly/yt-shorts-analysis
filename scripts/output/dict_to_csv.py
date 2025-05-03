@@ -2,7 +2,7 @@ import csv
 import os
 
 # Function to create csv (excel) file for all the videos
-def create_video_csv(video_dict, channel, video_type, output_folder="video_lists"):
+def create_video_csv(video_dict, channel, video_type, output_folder="../data/video_lists"):
 
     # Make sure destination folder exists
     os.makedirs(output_folder, exist_ok=True)
