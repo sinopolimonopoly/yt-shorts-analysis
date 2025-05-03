@@ -4,7 +4,7 @@ def get_transcript(video_id):
 
     ytt_api = YouTubeTranscriptApi()
 
-    video = ytt_api.fetch("pKuguDpmti4")
+    video = ytt_api.fetch(video_id)
 
     transcript = ""
 
