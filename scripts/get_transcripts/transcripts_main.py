@@ -26,8 +26,7 @@ reader = csv.reader(vid_data)
 next(reader)
 counter = 0
 
-print(f'{'Video':<60} {'SOALAS Count':<20} {'LAS Count':<20} {'Applewood Count':<20} {'Transcript?':<12}')
-
+print(f'{'ID':<13} {'Video':<60} {'SOALAS Count':<20} {'LAS Count':<20} {'Applewood Count':<20} {'Transcript?':<12}')
 
 for row in reader:
     counter += 1
@@ -47,7 +46,7 @@ for row in reader:
     phrase_dict[video_id]["Applewood Count"] = word_count
     phrase_dict[video_id]["Transcript?"] = is_transcript
 
-    print(f'{video_title:<60} {phrase_count:<20} {sub_phrase_count:<20} {word_count:<20} {is_transcript:<12}')
+    print(f'{video_id:<13} {video_title:<60} {phrase_count:<20} {sub_phrase_count:<20} {word_count:<20} {is_transcript:<12}')
 
 # output_dict(phrase_dict)
 end = time.time()

@@ -7,12 +7,13 @@ def create_phrase_csv(phrase_dict):
 
         writer = csv.writer(csv_file)
 
-        writer.writerow(["Video ID", "Title", "SOALAS Count", "LAS Count", "Applewood Count"])
+        writer.writerow(["Video ID", "Title", "SOALAS Count", "LAS Count", "Applewood Count", "Transcript?"])
 
         for video_id, info in phrase_dict.items():
             title = info["Title"]
             soalas_count = info["SOALAS Count"]
             las_count = info["LAS Count"]
             applewood_count = info["Applewood Count"]
+            is_transcript = info["Transcript?"]
 
-            writer.writerow([video_id, title, soalas_count, las_count, applewood_count])
+            writer.writerow([video_id, title, soalas_count, las_count, applewood_count, is_transcript])
