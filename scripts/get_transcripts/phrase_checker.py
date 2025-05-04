@@ -22,7 +22,6 @@ def check_for_phrase(phrase, transcript):
                 current_phrase = []
                 current_idx = 0
 
-
         else:
             phrase_present = False
             current_phrase = []
