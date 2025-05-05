@@ -8,8 +8,8 @@ from new_info_getter import get_videos_info
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
-from output.console_outputter import output_info
-from output.dict_to_csv import create_video_csv
+from output.video_lists.console_outputter import output_info
+from output.video_lists.dict_to_csv import create_video_csv
 
 # Channel to scrape
 handle = "maxthemeatguy"

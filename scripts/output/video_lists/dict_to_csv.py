@@ -2,16 +2,18 @@ import csv
 import os
 
 # Function to create csv (excel) file for all the videos
-def create_video_csv(video_dict, channel, video_type, output_folder="../data/video_lists"):
+def create_video_csv(video_dict, channel, video_type, output_folder="../../../data/video_lists"):
 
     # Make sure destination folder exists
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), output_folder))
     os.makedirs(output_folder, exist_ok=True)
 
     # Create file name with channel handle
     file_name = f'{channel}_{'_'.join(video_type.split(" "))}_list.csv'
 
     # Add path so file knows where to go
-    file_path = os.path.join(output_folder, file_name)
+    file_path = os.path.join(base_dir, file_name)
+    print(file_path)
 
     # Specify file name and writing operation
     # newline='' prevents unnecessary line breaks between rows

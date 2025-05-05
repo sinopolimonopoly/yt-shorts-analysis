@@ -1,9 +1,15 @@
 import csv
 import os
 
-def create_phrase_csv(phrase_dict):
+def create_phrase_csv(phrase_dict, channel, output_folder="../../../data/phrase_datasets"):
 
-    with open('MTMG Phrase Dataset.csv', 'w', newline='', encoding='utf-8') as csv_file:
+    file_name = f"{channel}_phrase_dataset.csv"
+    
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), output_folder))
+
+    file_path = os.path.join(base_dir, file_name)
+
+    with open(file_path, 'w', newline='', encoding='utf-8') as csv_file:
 
         writer = csv.writer(csv_file)
 
