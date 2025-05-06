@@ -12,7 +12,7 @@ from output.video_lists.console_outputter import output_info
 from output.video_lists.dict_to_csv import create_video_csv
 
 # Channel to scrape
-handle = "maxthemeatguy"
+handle = "EmperorLemon"
 # videos (long form), shorts, all_uploads 
 video_type = "shorts"
 
@@ -32,8 +32,12 @@ video_info = get_videos_info(video_ids)
 videos_by_date = dict(sorted(video_info.items(), key = lambda item: item[1]['Numeric Date'], reverse=True))
 
 
-# Output the dictionary to the console (in a table)
-output_info(videos_by_date)
+if bool(video_info) == True:
+    # Output the dictionary to the console (in a table)
+    output_info(videos_by_date)
 
-# Create CSV file for dictionary
-create_video_csv(videos_by_date, handle, video_type)
+    # Create CSV file for dictionary
+    create_video_csv(videos_by_date, handle, video_type)
+
+else:
+    print(f"No output. {video_type} request for channel {handle} yielded empty dictionary")
